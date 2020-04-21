@@ -1,84 +1,96 @@
 #include <iostream>
 #include <string>
-#include "GenListNode.h"
-using namespace std
+#include "DoubleGenList.h"
+using namespace std;
 
 template <class T>
 class GenQueue{
+
 public:
-  GenQueue(); //default constructor
-  GenQueue(int maxSize); //overloaded constructor
+  GenQueue();
+  GenQueue(int maxSize);
   ~GenQueue();
-
-//core functions
-  void insert(chard d); //enqueue
-  char remove(); //deququq
-
-  //aux functions
-  char peek();
+  GenListNode<T> *front; //front and back from GenListNode
+  GenListNode<T> *back;
+  unsigned int size;
+  void insert(T d);
+  T remove();
+  T peek();
   bool isFull();
   bool isEmpty();
   int getSize();
-
-  int front;
-  int remainder;
-  int mSize;
-  int numElements;
-
-  char *myQueue; // array
 };
 
 
 template <class T>
-GenQueue::GenQueue(){
+GenQueue<T>::GenQueue(){
   ///default
 };
 
 template <class T>
-GenQueue::GenQueue(int maxSize){
-  myQueue = new char(int maxSize);
-  mSize = maxSize;
-  front = 0;
-  rear = -1;
-  numElements = 0;
+GenQueue<T>::GenQueue(int maxSize){
 };
 
 template <class T>
-GenQueue::~GenQueue(){
+GenQueue<T>::~GenQueue(){
   //gotta figure this one out
 };
 
 template <class T>
-void GenQueue::insert(char d){
-  myQueue[++rear] = d;
-  ++numElements;
+void GenQueue<T>::insert(T d){
+
+  GenListNode<T> *temp = new GenListNode<T>(d);
+  if(front == NULL){
+    front = temp;
+  }
+  else{
+    back->next = temp;
+    temp->prev = back;
+  }
+  back = temp;
+  size++;
+
 }
 
 template <class T>
-char GenQueue::remove(){
-  char c = '\0';
-  c = myQueue[front];
-  ++front;
-  --numElements;
-  return c;
+T GenQueue<T>::remove(){
+  GenListNode<T> *dFront = front;
+  if(isEmpty()){
+    cout << "Queue is empty unable to remove" << endl;
+  }
+  else{
+    if(front == back){
+      front = NULL;
+      back = NULL;
+    }
+    else{
+
+      front->next->prev = NULL; //the next onewill have a prev of NULL;
+      front = front->next;
+
+    }
+  }
+  size--;
+  return dFront->data;
+  free(dFront);
 }
 
 template <class T>
-char GenQueue::peek(){
-  return myQueue[front];
+T GenQueue<T>::peek(){
+  return front->data;
 }
 
 template <class T>
-bool GenQueue::isFull(){
-  return (numElements == size);
+bool GenQueue<T>::isFull(){
+  return size != 0;
 }
 
 template <class T>
-bool GenQueue::isEmpty(){
-  return (numElements == 0);
+bool GenQueue<T>::isEmpty(){
+  return size == 0;
 }
 
 template <class T>
-int GenQueue::getsize(){
-  return numElements;
+int GenQueue<T>::getSize(){
+  return size;
 }

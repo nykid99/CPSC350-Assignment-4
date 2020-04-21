@@ -9,27 +9,33 @@ class GenListNode
 		T data;
     GenListNode<T> *next;
     GenListNode<T> *prev;
+		GenListNode();
+		GenListNode(T d);
+		~GenListNode();
 
-		GenListNode(){
-      data = NULL;
-      next = NULL;
-      prev = NULL;
-    };
 
-		GenListNode(T d)
-		{
-			data = d;
-			next = NULL;
-			prev = NULL;
-		}
-		~GenListNode()
-		{
-			if (next != NULL)
-			{
-				next = NULL;
-				prev = NULL;
-				delete next;
-				delete prev;
-			}
-		}
 };
+template <class T>
+GenListNode<T>::GenListNode(){
+	data = NULL;
+	next = NULL;
+	prev = NULL;
+};
+template <class T>
+GenListNode<T>::GenListNode(T d)
+{
+	data = d;
+	next = NULL;
+	prev = NULL;
+}
+template <class T>
+GenListNode<T>::~GenListNode()
+{
+	if (next != NULL)
+	{
+		next = NULL;
+		prev = NULL;
+		delete next;
+		delete prev;
+	}
+}

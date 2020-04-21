@@ -12,11 +12,10 @@ using namespace std;
 
 template <typename T>
 class DoubleGenList{ //this is the template class for the DoubleGenList
-private:
+public:
   GenListNode<T> *front; //front and back from GenListNode
   GenListNode<T> *back;
   unsigned int size;
-public:
   DoubleGenList();//default constructor
   DoubleGenList(int d); // overloaded constructor
   ~DoubleGenList(); // destructor
@@ -54,8 +53,10 @@ DoubleGenList<T>::DoubleGenList(int d){
 };
 
 
-
-
+template <typename T>
+bool DoubleGenList<T>::isEmpty(){
+  return size == 0;
+}
 
 
 
