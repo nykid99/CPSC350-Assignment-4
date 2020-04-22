@@ -6,6 +6,17 @@
 
 using namespace std;
 
+int Registrar::stringToInteger(string convert){
+  int x = 0;
+  if(convert == "1"){
+    int x = 1;
+    cout << x << endl;
+    cout << "string to integer was complete" << endl;
+
+
+    return 1;
+  }
+}
 Registrar::Registrar(){
   double meanStudentWait = 0;
   double medianStudentWait = 0;
@@ -19,7 +30,7 @@ Registrar::Registrar(){
   int numOfStudentsLine = 0;
   int studentNumTotal = 0;
   int lineId = 0;
-  int numOfWindows;
+  int numOfWindows = 0;;
   GenQueue<Student> studentQueue;
 };
 
@@ -28,6 +39,11 @@ void Registrar::infoGetter(string fileName){ //gets the information from the fil
   string line;
   lineId = 0; //this is used to determine which type of information it is.
   inFile.open(fileName);
+  if(!inFile.is_open()){
+    cout << "file does not exist" << endl;
+    cout << "Shutting down system" << endl;
+    exit(1);
+  }
   getline(inFile, line);
   numOfWindows = stoi(line); // this gets the first line which is the number of windows open
   window = new Student*[numOfWindows]; // array created for students
@@ -57,6 +73,7 @@ void Registrar::infoGetter(string fileName){ //gets the information from the fil
       lineId--;
     }
   }
+  inFile.close();
 }
 
 double Registrar::getMeanWait(){

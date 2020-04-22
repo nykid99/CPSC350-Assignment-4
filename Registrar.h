@@ -33,6 +33,7 @@ class Registrar
         double getMeanIdle();
         int getLongestIdle();
         int getNumIdleOverFive();
+        int stringToInteger(string convert);
 
         Student* *window;
         GenQueue<Student*> RegistrarQueue;
