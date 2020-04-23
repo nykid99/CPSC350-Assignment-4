@@ -1,3 +1,11 @@
+// # Cpsc350-Assignment-4
+// Kenneth Cho
+// 2325383
+// kecho@chapman.edu
+// cpsc350-1
+// This is the header file for the DoubleGenList template class
+
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -6,7 +14,7 @@
 
 using namespace std;
 
-int Registrar::stringToInteger(string convert){
+int stringToInteger(string convert){
   int x = 0;
   if(convert == "1"){
     int x = 1;
@@ -55,32 +63,32 @@ void Registrar::infoGetter(string fileName){ //gets the information from the fil
 
   while (getline(inFile, line)){
     if(lineId == 0){
-      studentEnqueueTime = stoi(line);
+      studentEnqueueTime = stoi(line); //second line is the entry time for the student
       lineId++;
     }
-    if(lineId == 1){
+    if(lineId == 1){ //moves on to the next line which is
       numOfStudentsLine = stoi(line);
 
       for (int i = 0; i < numOfStudentsLine; ++i){
         getline(inFile, line);
-        studentWindowTime = stoi(line);
+        studentWindowTime = stoi(line); //student time at window is stored
 
-        Student* student = new Student(studentWindowTime, studentEnqueueTime);
-        RegistrarQueue.insert(student);
-        studentNumTotal++;
+        Student* student = new Student(studentWindowTime, studentEnqueueTime); //new student with these infos from the textfile is created
+        RegistrarQueue.insert(student); //inserted to the queue
+        studentNumTotal++;//numbers incremented
         waitTimeCount++;
       }
-      lineId--;
+      lineId--; //line id goes back to 0;
     }
   }
-  inFile.close();
+  inFile.close();//inFile is closed
 }
 
 double Registrar::getMeanWait(){
   double sum;
   double numWaitTime;
   double result;
-  GenListNode<int> *start = waitTimeDoubleList.front;
+  GenListNode<int> *start = waitTimeList.front;
   while(start != NULL){
     sum += start->data;
     start = start->next;
@@ -91,10 +99,25 @@ double Registrar::getMeanWait(){
   }
   return result;
 }
+double Registrar::getMeanIdle(){
+  double sum;
+  double numIdleTime;
+  double result;
+  GenListNode<int> *start = idleTimeList.front;
+  while(start != NULL){
+    sum += start->data;
+    start = start->next;
+    numIdleTime++;
+
+    result = sum/numIdleTime;
+
+  }
+  return result;
+}
 
 int Registrar::getWaitOverTen(){
   int numOfWaitOverTen;
-  GenListNode<int> *start = waitTimeDoubleList.front;
+  GenListNode<int> *start = waitTimeList.front;
   while(start != NULL){
     if(start->data > 10){
       numOfWaitOverTen++;
@@ -105,19 +128,50 @@ int Registrar::getWaitOverTen(){
 }
 
 int Registrar::getLongestWait(){
+  int longest;
+  int current;
+  GenListNode<int> *start = waitTimeList.front;
+  while(start->next != NULL){
+    start->data = current;
+    if(start->data <start->next->data){
+      start->next->data = longest;
+      start = start->next;
+    }
+    else{
+      start = start->next;
+    }
+  }
+  return longest;
 
+}
+
+int Registrar::getLongestIdle(){
+  int longest;
+  int current;
+  GenListNode<int> *start = idleTimeList.front;
+  while(start->next != NULL){
+    start->data = current;
+    if(start->data <start->next->data){
+      start->next->data = longest;
+      start = start->next;
+    }
+    else{
+      start = start->next;
+    }
+  }
+  return longest;
 }
 
 
 double Registrar::getMedianWait(){
   double medResult = 0;
 
-  GenListNode<int> *start = waitTimeDoubleList.front;
+  GenListNode<int> *start = waitTimeList.front;
   while(start != NULL){
     start = start->next;
     waitTimeCount++;
   }
-  start = waitTimeDoubleList.front;
+  start = waitTimeList.front;
   int medArray[waitTimeCount];
 
   for(int i = 0; i < waitTimeCount; ++i){
@@ -149,4 +203,18 @@ double Registrar::getMedianWait(){
     return medResult;
 
   }
+}
+
+int Registrar::getNumIdleOverFive(){
+  int count = 0;
+
+  GenListNode<int> *start = idleTimeList.front;
+  while(start != NULL){
+    if(start->data > 5){
+      count++;
+    }
+    start = start->next;
+
+  }
+  return count;
 }

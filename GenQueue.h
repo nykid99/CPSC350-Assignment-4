@@ -1,3 +1,11 @@
+// # Cpsc350-Assignment-4
+// Kenneth Cho
+// 2325383
+// kecho@chapman.edu
+// cpsc350-1
+// This is the header file for the GenQueue template class
+
+
 #include <iostream>
 #include <string>
 #include "DoubleGenList.h"
@@ -12,7 +20,7 @@ public:
   ~GenQueue();
   GenListNode<T> *front; //front and back from GenListNode
   GenListNode<T> *back;
-  unsigned int size;
+  unsigned int size = 0;
   void insert(T d);
   T remove();
   T peek();
@@ -40,7 +48,7 @@ template <class T>
 void GenQueue<T>::insert(T d){
 
   GenListNode<T> *temp = new GenListNode<T>(d);
-  if(front == NULL){
+  if(isEmpty()){
     front = temp;
   }
   else{
@@ -59,7 +67,7 @@ T GenQueue<T>::remove(){
     cout << "Queue is empty unable to remove" << endl;
   }
   else{
-    if(front == back){
+    if(front->next == NULL){
       front = NULL;
       back = NULL;
     }

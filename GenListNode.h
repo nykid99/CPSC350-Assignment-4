@@ -1,3 +1,11 @@
+// # Cpsc350-Assignment-4
+// Kenneth Cho
+// 2325383
+// kecho@chapman.edu
+// cpsc350-1
+// This is the header file for the DoubleGenList template class
+
+
 #include <iostream>
 #include <string>
 using namespace std;
