@@ -9,4 +9,4 @@ References: used previous assingment for creating template classes
 https://www.geeksforgeeks.org/implementation-deque-using-doubly-linked-list/
 for creating the Queue
 
-program compiles but doesn't reach 0
+program compiles and text inputs are stored correctly but doesn't return 0
